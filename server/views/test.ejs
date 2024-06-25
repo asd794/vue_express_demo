@@ -1,0 +1,116 @@
+<%- include('./header.ejs', {title: title, navBar: navBar}); %>
+<!-- 將變數注入進去樣板 -->
+    <h1>這是測試頁面</h1>
+    <p>Welcome to 這是測試頁面</p>
+    <button id="callGetApi">GET API</button>
+    <br>
+    <button id="callGetApi2">GET API2</button>
+    <br>
+    <button id="callPostApi">POST API</button>
+    <br>
+    <button id="callPostApi2">POST API2</button>
+    <br>
+    <button id="callPutApi">PUT API</button>
+    <br>
+    <button id="callPatchApi">PATCH API</button>
+    <br>
+    <button id="callDeleteApi">DELETE API</button>
+
+    <a href="./">前往首頁</a>
+    <script>
+        let callGetApiButton = document.getElementById('callGetApi');
+        callGetApiButton.addEventListener('click',async function(){
+          let result = await fetch('/test/get?id=helloworld').then(res=>{
+            return res.text();
+          })
+          alert(result);
+        });
+        let callGetApiButton2 = document.getElementById('callGetApi2');
+        callGetApiButton2.addEventListener('click',async function(){
+          let result = await fetch('/test/get/55688?id=hellwolrd2').then(res=>{
+            return res.text();
+          })
+          alert(result);
+        });
+        let callPostApiButton = document.getElementById('callPostApi');
+        callPostApiButton.addEventListener('click',async function(){
+            let result = await fetch('/test/post',{
+                method: 'post'
+            }).then(res=>{
+                return res.json();
+            })
+            alert(JSON.stringify(result));
+        });
+
+        let callPostApiButton2 = document.getElementById('callPostApi2');
+        callPostApiButton2.addEventListener('click',async function(){
+          let result = await fetch('/test/post/12345678?id=helloworld',{
+            method: 'post',
+            body: JSON.stringify({
+              id: 987654321
+            }),
+            headers: {
+              'content-type': 'application/json'
+            },
+          }).then(res=>{
+            return res.text();
+          })
+          alert(result);
+        });
+        // PUT API
+        let callPutApiButton = document.getElementById('callPutApi');
+        callPutApiButton.addEventListener('click', async function () {
+          let result = await fetch('/test/put/12345678?id=helloworld', {
+            method: 'put',
+            body: JSON.stringify({
+              id: 987654321
+            }),
+            headers: {
+              'content-type': 'application/json'
+            },
+          }).then(res => {
+            return res.text();
+          })
+          alert(result);
+        });
+        // PATCH
+        let callPatchApiButton = document.getElementById('callPatchApi');
+        callPatchApiButton.addEventListener('click', async function () {
+          let result = await fetch('/test/patch/12345678?id=helloworld', {
+            method: 'PATCH', // 這是陷阱喔，請看下方～  PATCH!
+            headers: {
+              'content-type': 'application/json',
+              'testheaderkey': 'TEST HEADER,yeeeeeeeeeeeee!'
+
+            },
+            body: JSON.stringify({
+              id: 987654321
+            }),
+            // headers: {
+            //   'content-type': 'application/json'
+            // },
+          }).then(res => {
+            return res.text();
+          })
+          alert(result);
+        });
+        // delete
+        let callDeleteApiButton = document.getElementById('callDeleteApi');
+        callDeleteApiButton.addEventListener('click', async function () {
+          let result = await fetch('/test/delete/12345678?id=helloworld', {
+            method: 'delete',
+            body: JSON.stringify({
+              id: 987654321
+            }),
+            headers: {
+              'content-type': 'application/json'
+            },
+          }).then(res => {
+            return res.text();
+          })
+          alert(result);
+        })
+
+  </script>
+</body>
+</html>
