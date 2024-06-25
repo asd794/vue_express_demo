@@ -32,7 +32,7 @@ export default {
   data() {
     return {
 			apiServer: "http://localhost:3000/api/",
-			frontRedirect: "http://localhost/",
+			// frontRedirect: "http://localhost/",
       name: "",
       email: "",
       password: "",
@@ -67,7 +67,8 @@ export default {
           alert('email已被註冊，請重新註冊');
         }else if(response['data']['message']=='EmailNotFound'){
           alert('註冊成功~!');
-          window.location.href = `${this.frontRedirect}login/`;
+          // window.location.href = `${this.frontRedirect}login/`;
+          this.$router.push('/login');
         }
       })
       .catch(function (error) {
@@ -83,7 +84,8 @@ export default {
       .then(response => {
         console.log('Session data:', response.data);
         if (response.data.isAuthenticated == true){
-          window.location.href = `${this.frontRedirect}products/`;
+          // window.location.href = `${this.frontRedirect}products/`;
+          this.$router.push('/products');
         }
         // alert('Session data: ' + JSON.stringify(response.data));
       })

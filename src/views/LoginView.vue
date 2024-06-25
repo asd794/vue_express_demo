@@ -37,7 +37,7 @@
         email: "",
         password: "",
         apiServer: "http://localhost:3000/api/",
-        frontRedirect: "http://localhost/",
+        // frontRedirect: "http://localhost/",
 
       };
     },
@@ -91,7 +91,9 @@
       .then(response => {
         console.log('Session data:', response.data);
         if (response.data.isAuthenticated == true){
-          window.location.href = `${this.frontRedirect}products/`;
+          // window.location.href = `${this.frontRedirect}products/`;
+          this.$router.push('/products');
+          
         }
         // alert('Session data: ' + JSON.stringify(response.data));
       })

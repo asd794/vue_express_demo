@@ -44,7 +44,7 @@ export default {
   data() {
   return {
     apiServer: "http://localhost:3000/api/",
-    frontRedirect: "http://localhost/",
+    // frontRedirect: "http://localhost/",
     apiServerimage: "http://localhost:3000",
     isAuthenticated: false,
     product: [],

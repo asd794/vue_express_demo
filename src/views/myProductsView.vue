@@ -7,9 +7,10 @@
 			<div class="container">
 				<div class="row">				
 					<div class="col-lg-8 col-12 mx-auto" v-for="(product, index) in MyProducts" :key="index">
-						<a :href="'http://localhost/products/' + product.Product_ID" style="font-size: 30px; line-height: 50px;">
+						<router-link :to="`/products/${product.Product_ID}`" class="btn btn-link" style="font-size: 30px; line-height: 50px;">{{ product.Product_Name }}, Product_ID:{{ product.Product_ID }}</router-link>
+						<!-- <a :href="'http://localhost/products/' + product.Product_ID" style="font-size: 30px; line-height: 50px;">
 							{{ product.Product_Name }}, Product_ID:{{ product.Product_ID }}
-						</a>
+						</a> -->
 						<br>
 					</div>					
 				</div>
@@ -27,7 +28,7 @@
     data() {
 		return {
 			apiServer: "http://localhost:3000/api/",
-			frontRedirect: "http://localhost/",
+			// frontRedirect: "http://localhost/",
 			loading: false,
 			MyProducts: [],
 		};
@@ -74,7 +75,8 @@
 			console.log('Session data:', response.data);
 			if (response.data.isAuthenticated == false){
 				
-				window.location.href = `${this.frontRedirect}products/`;
+				// window.location.href = `${this.frontRedirect}products/`;
+				this.$router.push('/products');
 			}else{
 				this.onlogin(); // 成功後觸發 Vuex 的 login action
 			}

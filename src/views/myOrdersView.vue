@@ -60,7 +60,7 @@
     data() {
 		return {
 			apiServer: "http://localhost:3000/api/",
-			frontRedirect: "http://localhost/",
+			// frontRedirect: "http://localhost/",
 			MyOrders: [],
 		};
     },
@@ -97,7 +97,8 @@
 			console.log('Session data:', response.data);
 			if (response.data.isAuthenticated == false){
 				
-				window.location.href = `${this.frontRedirect}products/`;
+				// window.location.href = `${this.frontRedirect}products/`;
+				this.$router.push('/products');
 			}else{
 				this.onlogin(); // 成功後觸發 Vuex 的 login action
 			}

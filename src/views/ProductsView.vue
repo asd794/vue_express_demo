@@ -9,7 +9,8 @@
 
 			<div class="col" style="max-width: 340px;max-height: 489.9px; margin-bottom: 40px;" v-for="(product, index) in products" :key="index">
 				<div class="desc" >
-					<a :href="'http://localhost/products/' + product.Product_ID"><img :src="getImageUrl(product.Image)" width="300" height="400" ></a>
+					<router-link :to="`/products/${product.Product_ID}`"><img :src="getImageUrl(product.Image)" width="300" height="400" ></router-link>
+					<!-- <a :href="'http://localhost/products/' + product.Product_ID"><img :src="getImageUrl(product.Image)" width="300" height="400" ></a> -->
 					<h3>{{ product.Product_Name }}</h3>
 					<br>
 					<span>$ {{ product.Price }}</span>

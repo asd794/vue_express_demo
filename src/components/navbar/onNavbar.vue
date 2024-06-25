@@ -125,7 +125,7 @@
       data() {
         return {
           apiServer: "http://localhost:3000/api/",
-          frontRedirect: "http://localhost/",
+          // frontRedirect: "http://localhost/",
           Name: "",
           Email: "",
           isAuthenticated: null,
@@ -144,7 +144,8 @@
           // 當請求成功時
           console.log('成功請求get logoutAPI~')
           // 前往特定網頁
-          window.location.href = `${this.frontRedirect}products/`;
+          // window.location.href = `${this.frontRedirect}products/`;
+          this.$router.push('/products');
         })
         .catch(function (error) {
           // 請求失敗時
