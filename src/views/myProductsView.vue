@@ -7,7 +7,7 @@
 			<div class="container">
 				<div class="row">				
 					<div class="col-lg-8 col-12 mx-auto" v-for="(product, index) in MyProducts" :key="index">
-						<a :href="'http://localhost:5173/products/' + product.Product_ID" style="font-size: 30px; line-height: 50px;">
+						<a :href="'http://localhost/products/' + product.Product_ID" style="font-size: 30px; line-height: 50px;">
 							{{ product.Product_Name }}, Product_ID:{{ product.Product_ID }}
 						</a>
 						<br>
@@ -26,6 +26,8 @@
 	export default {
     data() {
 		return {
+			apiServer: "http://localhost:3000/api/",
+			frontRedirect: "http://localhost/",
 			loading: false,
 			MyProducts: [],
 		};
@@ -48,7 +50,7 @@
 		...mapActions(['onlogin', 'offlogout']),
 		getMyProducts() {
 		// event.preventDefault();
-			axios.get('http://localhost:3000/api/myproducts', {
+			axios.get(`${this.apiServer}myproducts`, {
 				// params: {
 				// 	'Member_id' :8,
 				// }
@@ -67,12 +69,12 @@
 			});
 		},
 		getSessionData() {
-			axios.post('http://localhost:3000/api/session', { withCredentials: true })
+			axios.post(`${this.apiServer}session`, { withCredentials: true })
 		.then(response => {
 			console.log('Session data:', response.data);
 			if (response.data.isAuthenticated == false){
 				
-				window.location.href = 'http://localhost:5173/products/';
+				window.location.href = `${this.frontRedirect}products/`;
 			}else{
 				this.onlogin(); // 成功後觸發 Vuex 的 login action
 			}

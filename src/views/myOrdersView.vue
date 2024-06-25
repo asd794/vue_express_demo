@@ -59,6 +59,8 @@
 	export default {
     data() {
 		return {
+			apiServer: "http://localhost:3000/api/",
+			frontRedirect: "http://localhost/",
 			MyOrders: [],
 		};
     },
@@ -76,7 +78,7 @@
 		...mapActions(['onlogin', 'offlogout']),
 		getMyOrders() {
 		// event.preventDefault();
-			axios.get('http://localhost:3000/api/myorders', {
+			axios.get(`${this.apiServer}myorders`, {
 			}).then((response) => {
 				console.log(response.data);
 				this.MyOrders = response.data.reverse(); // 反轉
@@ -90,12 +92,12 @@
 			});
 		},
 		getSessionData() {
-			axios.post('http://localhost:3000/api/session', { withCredentials: true })
+			axios.post(`${this.apiServer}session`, { withCredentials: true })
 		.then(response => {
 			console.log('Session data:', response.data);
 			if (response.data.isAuthenticated == false){
 				
-				window.location.href = 'http://localhost:5173/products/';
+				window.location.href = `${this.frontRedirect}products/`;
 			}else{
 				this.onlogin(); // 成功後觸發 Vuex 的 login action
 			}

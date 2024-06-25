@@ -31,6 +31,8 @@ export default {
   // },
   data() {
     return {
+			apiServer: "http://localhost:3000/api/",
+			frontRedirect: "http://localhost/",
       name: "",
       email: "",
       password: "",
@@ -53,7 +55,7 @@ export default {
         return
       }
       console.log('進入register方法');
-      axios.post('http://localhost:3000/api/member',{
+      axios.post(`${this.apiServer}member`,{
         name: this.name,
         email: this.email,
         password: this.password
@@ -65,7 +67,7 @@ export default {
           alert('email已被註冊，請重新註冊');
         }else if(response['data']['message']=='EmailNotFound'){
           alert('註冊成功~!');
-          window.location.href = 'http://localhost:5173/login/';
+          window.location.href = `${this.frontRedirect}login/`;
         }
       })
       .catch(function (error) {
@@ -77,11 +79,11 @@ export default {
       });
     },
     getSessionData() {
-        axios.post('http://localhost:3000/api/session', { withCredentials: true })
+        axios.post(`${this.apiServer}session`, { withCredentials: true })
       .then(response => {
         console.log('Session data:', response.data);
         if (response.data.isAuthenticated == true){
-          window.location.href = 'http://localhost:5173/products/';
+          window.location.href = `${this.frontRedirect}products/`;
         }
         // alert('Session data: ' + JSON.stringify(response.data));
       })

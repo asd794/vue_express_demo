@@ -36,6 +36,8 @@
       return {
         email: "",
         password: "",
+        apiServer: "http://localhost:3000/api/",
+        frontRedirect: "http://localhost/",
 
       };
     },
@@ -65,7 +67,7 @@
           return
         }
         console.log('進入login方法');
-        axios.post('http://localhost:3000/api/login',{
+        axios.post(`${this.apiServer}login`,{
           email: this.email,
           password: this.password
         }).then(function (response) {
@@ -85,11 +87,11 @@
         });
       },
       getSessionData() {
-        axios.post('http://localhost:3000/api/session', { withCredentials: true })
+        axios.post(`${this.apiServer}session`, { withCredentials: true })
       .then(response => {
         console.log('Session data:', response.data);
         if (response.data.isAuthenticated == true){
-          window.location.href = 'http://localhost:5173/products/';
+          window.location.href = `${this.frontRedirect}products/`;
         }
         // alert('Session data: ' + JSON.stringify(response.data));
       })

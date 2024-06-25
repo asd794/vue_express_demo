@@ -47,6 +47,8 @@
 	export default {
     data() {
 		return {
+			apiServer: "http://localhost:3000/api/",
+			frontRedirect: "http://localhost/",
             isAuthenticated: false,
             mycart: [],
             total: 0,
@@ -70,12 +72,12 @@
     methods: {
 		...mapActions(['onlogin', 'offlogout']),
 		getSessionData() {
-			return axios.post('http://localhost:3000/api/session', { withCredentials: true })
+			return axios.post(`${this.apiServer}session`, { withCredentials: true })
             .then(response => {
 			console.log('Session data:', response.data);
 			if (response.data.isAuthenticated == false){
 				this.isAuthenticated = false;
-				window.location.href = 'http://localhost:5173/products/';
+				window.location.href = `${this.frontRedirect}products/`;
 			}else{
 				this.onlogin(); // 成功後觸發 Vuex 的 login action
                 this.isAuthenticated = response.data.isAuthenticated;
@@ -91,14 +93,14 @@
 			});
 		},
         getMycart() {
-            axios.get('http://localhost:3000/api/mycart')
+            axios.get(`${this.apiServer}mycart`)
             .then(response => {
                 console.log(response.data);
                 this.mycart = response.data.results;
                 console.log(this.mycart);
                 for (let i = 0; i < this.mycart.length; i++){
 
-                    axios.get(`http://localhost:3000/api/products/${this.mycart[i].Product_ID}`).then((responseProduct) => {
+                    axios.get(`${this.apiServer}products/${this.mycart[i].Product_ID}`).then((responseProduct) => {
                         this.mycart[i].Product_Name = responseProduct.data.Product_Name;
                         this.total+= this.mycart[i].Price*this.mycart[i].Amount;
                     }).catch(function (errorProduct) {
@@ -135,7 +137,7 @@
             formData.append('description', this.description);
            
             try {
-                const response = await axios.post('http://localhost:3000/api/upload', formData, {
+                const response = await axios.post(`${this.apiServer}upload`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                 }});

@@ -43,6 +43,9 @@ import { mapGetters, mapActions } from 'vuex';
 export default {
   data() {
   return {
+    apiServer: "http://localhost:3000/api/",
+    frontRedirect: "http://localhost/",
+    apiServerimage: "http://localhost:3000",
     isAuthenticated: false,
     product: [],
     productId: null,
@@ -64,7 +67,7 @@ export default {
     ...mapActions(['onlogin', 'offlogout']),
     getProduct() {
     // event.preventDefault();
-      axios.get(`http://localhost:3000/api/products/${this.productId}`).then((response) => {
+      axios.get(`${this.apiServer}products/${this.productId}`).then((response) => {
         console.log(response.data);
         this.product = response.data;
       }).catch(function (error) {
@@ -75,10 +78,11 @@ export default {
       });
     },
     getImageUrl(imagePath) {
+      console.log(this.product?.Image?.substr(1) ? `http://localhost:3000${imagePath.substr(1)}` : '');
       return this.product?.Image?.substr(1) ? `http://localhost:3000${imagePath.substr(1)}` : '';
     },
     getSessionData() {
-      axios.post('http://localhost:3000/api/session', { withCredentials: true })
+      axios.post(`${this.apiServer}session`, { withCredentials: true })
       .then(response => {
         console.log('Session data:', response.data);
         if (response.data.isAuthenticated == true){
@@ -107,7 +111,7 @@ export default {
       console.log(this.options);
       console.log('選擇數量: ',this.selectedOption);
 
-      axios.post(`http://localhost:3000/api/mycart`, {'productID': this.productId, 'selectAmount': this.selectedOption, 'productPrice': this.product.Price} ).then((response) => {
+      axios.post(`${this.apiServer}mycart`, {'productID': this.productId, 'selectAmount': this.selectedOption, 'productPrice': this.product.Price} ).then((response) => {
         alert(response.data.message);
         console.log(response.data);
         location.reload();

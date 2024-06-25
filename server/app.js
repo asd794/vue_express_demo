@@ -36,7 +36,7 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 
 
 app.use(cors({
-  origin: 'http://localhost:5173', // 允許的前端 URL
+  origin: 'http://localhost', // 允許的前端 URL
   credentials: true // 允許跨域請求攜帶憑據（cookies）
 }));
 

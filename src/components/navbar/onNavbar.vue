@@ -20,9 +20,9 @@
               <li class="nav-item">
                 <router-link to="/products" class="nav-link">產品</router-link>
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <router-link to="/mycart" class="nav-link">購物車</router-link>
-              </li>
+              </li> -->
               
               <li class="nav-item dropdown" style="margin-right: 20px;">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -51,27 +51,7 @@
         </div>     
 
 
-
-
-
-        <!-- <div style="position: relative;">
-          <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-            這才是購物車
-          </a>
-          <div class="card" style="position: absolute; top: 100%; left: 0; z-index: 100;">
-            <div class="card-header d-flex justify-content-between align-items-end">
-              購物車內容
-            </div>
-            <div class="collapse" id="collapseExample">
-              <div class="card card-body">
-   
-                 
-              </div>
-            </div>
-          </div>
-        </div> -->
-        
-        <!--  -->
+        <!--購物車-->
         <div class="card" style="position: relative;  margin-right: 10px; background-color: #f5db9e; ">
 
           <a class="" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" >
@@ -105,7 +85,7 @@
                         </div>
                       </div> -->                      
                     </td>
-                    <td>{{ product.Product_Name }}</td>
+                    <td><router-link :to="`/products/${product.Product_ID}`" class="dropdown-item">{{ product.Product_Name }}</router-link></td>
                     <td>{{ product.Amount }}</td>
                     <td class="text-right">$ {{ product.Price }}</td>
                   </tr>
@@ -144,6 +124,8 @@
     },
       data() {
         return {
+          apiServer: "http://localhost:3000/api/",
+          frontRedirect: "http://localhost/",
           Name: "",
           Email: "",
           isAuthenticated: null,
@@ -157,12 +139,12 @@
     },
     methods: {
       logout(){
-        axios.get('http://localhost:3000/api/logout')
+        axios.get(`${this.apiServer}logout`)
         .then(function (response) {
           // 當請求成功時
           console.log('成功請求get logoutAPI~')
           // 前往特定網頁
-          window.location.href = 'http://localhost:5173/products/';
+          window.location.href = `${this.frontRedirect}products/`;
         })
         .catch(function (error) {
           // 請求失敗時
@@ -174,7 +156,7 @@
       },
       getSessionData() {
           console.log('這在onNavbar.vue裡面');
-          axios.post('http://localhost:3000/api/session', { withCredentials: true })
+          axios.post(`${this.apiServer}session`, { withCredentials: true })
           .then(response => {
             if (response.data.isAuthenticated == true){
               console.log(response.data);
@@ -188,14 +170,14 @@
           });
       },
       getMycart() {
-        axios.get('http://localhost:3000/api/mycart')
+        axios.get(`${this.apiServer}mycart`)
         .then(response => {
           console.log(response.data);
           this.mycart = response.data.results;
           console.log(this.mycart);
 
           for (let i = 0; i < this.mycart.length; i++){
-            axios.get(`http://localhost:3000/api/products/${this.mycart[i].Product_ID}`).then((responseProduct) => {
+            axios.get(`${this.apiServer}products/${this.mycart[i].Product_ID}`).then((responseProduct) => {
                 this.mycart[i].Product_Name = responseProduct.data.Product_Name;
                 this.total+= this.mycart[i].Price*this.mycart[i].Amount;
             }).catch(function (errorProduct) {
@@ -212,7 +194,7 @@
       },
       deleteaMycart(delete_Product_ID) {
         console.log(`有近來deleteaMycart${delete_Product_ID}`);
-        axios.delete(`http://localhost:3000/api/mycart/${delete_Product_ID}`).then((response) => {
+        axios.delete(`${this.apiServer}mycart/${delete_Product_ID}`).then((response) => {
           console.log(response.data.message);
           }).catch(function (errorProduct) {
               // 請求失敗時

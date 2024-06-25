@@ -9,7 +9,7 @@
 
 			<div class="col" style="max-width: 340px;max-height: 489.9px; margin-bottom: 40px;" v-for="(product, index) in products" :key="index">
 				<div class="desc" >
-					<a :href="'http://localhost:5173/products/' + product.Product_ID"><img :src="getImageUrl(product.Image)" width="300" height="400" ></a>
+					<a :href="'http://localhost/products/' + product.Product_ID"><img :src="getImageUrl(product.Image)" width="300" height="400" ></a>
 					<h3>{{ product.Product_Name }}</h3>
 					<br>
 					<span>$ {{ product.Price }}</span>
@@ -34,6 +34,8 @@ export default {
   },
 	data() {
 		return {
+			apiServer: "http://localhost:3000/api/",
+			apiServerimage: "http://localhost:3000",
 			products: [],
 		};
 	},
@@ -60,7 +62,7 @@ export default {
     ...mapActions(['onlogin', 'offlogout']),
 	getProducts() {
 		// event.preventDefault();
-		axios.get('http://localhost:3000/api/products').then((response) => {
+		axios.get(`${this.apiServer}products`).then((response) => {
 			console.log(response.data);			
 			this.products = response.data;
 			// console.log(this.products);
@@ -73,7 +75,7 @@ export default {
 		});
 	},
     getImageUrl(imagePath) {
-      return `http://localhost:3000${imagePath.substr(1)}`;
+      return `${this.apiServerimage}${imagePath.substr(1)}`;
     },
     testB() {
       console.log('進入到testB方法');
@@ -81,7 +83,7 @@ export default {
     },
 	getSessionData() {
 		
-		axios.post('http://localhost:3000/api/session', { withCredentials: true })
+		axios.post(`${this.apiServer}session`, { withCredentials: true })
 		.then(response => {
 			console.log('Session data:', response.data);
 			if (response.data.isAuthenticated == true){

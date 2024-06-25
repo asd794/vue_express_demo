@@ -54,6 +54,8 @@
 	export default {
     data() {
 		return {
+			apiServer: "http://localhost:3000/api/",
+			frontRedirect: "http://localhost/",
 			MyProducts: [],
             isAuthenticated: false,
             email: "",
@@ -79,12 +81,12 @@
     methods: {
 		...mapActions(['onlogin', 'offlogout']),
 		getSessionData() {
-			axios.post('http://localhost:3000/api/session', { withCredentials: true })
+			axios.post(`${this.apiServer}session`, { withCredentials: true })
             .then(response => {
 			console.log('Session data:', response.data);
 			if (response.data.isAuthenticated == false){
 				
-				window.location.href = 'http://localhost:5173/products/';
+				window.location.href = `${this.frontRedirect}products/`;
 			}else{
 				this.onlogin(); // 成功後觸發 Vuex 的 login action
                 this.isAuthenticated = response.data.isAuthenticated;
@@ -100,7 +102,7 @@
 			});
 		},
         patchMemberName() {
-            axios.patch('http://localhost:3000/api/member', { "newName": this.newName, "Member_ID": this.member_id, "condition": "changeName"})
+            axios.patch(`${this.apiServer}member`, { "newName": this.newName, "Member_ID": this.member_id, "condition": "changeName"})
             .then(response => {
                 this.isAuthenticated = response.data.isAuthenticated;
                 this.email = response.data.Email;
@@ -114,7 +116,7 @@
 			});
         },
         patchMemberPassword() {
-            axios.patch('http://localhost:3000/api/member', { "oldPassword": this.oldPassword, "newPassword": this.newPassword, "Member_ID": this.member_id ,"condition": "changePassword"})
+            axios.patch(`${this.apiServer}member`, { "oldPassword": this.oldPassword, "newPassword": this.newPassword, "Member_ID": this.member_id ,"condition": "changePassword"})
             .then(response => {
                 this.isAuthenticated = response.data.isAuthenticated;
                 this.email = response.data.Email;
