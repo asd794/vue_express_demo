@@ -19,10 +19,29 @@ var session = require('express-session')
 var app = express();
 
 
-
-
 // 必須要在伺服器解析請求之前使用，因為line的中間層會去解析"原始版本資料"
 app.use('/linebot', linebotRouter);
+
+// 自定義紀錄IP定址
+app.use((req, res, next) => {
+  const xForwardedFor = req.headers['x-forwarded-for'];
+  let ip;
+
+  if (xForwardedFor) {
+    ip = xForwardedFor.split(',')[0];
+  } else {
+    ip = req.socket.remoteAddress;
+  }
+
+  if (ip.includes('::ffff:')) {
+    ip = ip.split(':').reverse()[0];
+  } else if (ip === '::1') {
+    ip = '127.0.0.1';
+  }
+
+  console.log(`---Request from IP: ${ip} ---`);
+  next();
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
