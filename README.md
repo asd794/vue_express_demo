@@ -1,35 +1,15 @@
-# vite-project
+購物網站
 
-This template should help get you started developing with Vue 3 in Vite.
+系統:ubuntu(GCP)->docker->vue->express->mysql
 
-## Recommended IDE Setup
+domain:cloudflare(proxy)
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+前端:vue,bootstrap
 
-## Customize configuration
+後端:express,mysql
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+架構圖:https://docs.google.com/drawings/d/12vBPzAlrHko0sT6OWBZQuqqX3CMqIumIYn6ndvhFpo0/edit?usp=drive_link
 
-## Project Setup
+資料庫ERD:https://docs.google.com/drawings/d/1eS5dpAV2W0sO_FZeBZ1Y13kfg7iVNlQPxSuwvBGpv6A/edit?usp=drive_link
 
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+vue_express_demo:https://booo.site/
