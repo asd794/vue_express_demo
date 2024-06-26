@@ -2,7 +2,7 @@
 
 系統:ubuntu(GCP),docker
 
-domain:cloudflare(proxy)
+domain:cloudflare
 
 前端:vue,bootstrap
 
