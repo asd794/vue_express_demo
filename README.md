@@ -1,6 +1,6 @@
 購物網站
 
-系統:ubuntu(GCP)->docker->vue->express->mysql
+系統:ubuntu(GCP),docker
 
 domain:cloudflare(proxy)
 
@@ -12,4 +12,4 @@ domain:cloudflare(proxy)
 
 資料庫ERD:https://docs.google.com/drawings/d/1eS5dpAV2W0sO_FZeBZ1Y13kfg7iVNlQPxSuwvBGpv6A/edit?usp=drive_link
 
-vue_express_demo:https://booo.site/
+實際展示:https://shop.booo.site/
