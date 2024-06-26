@@ -1,5 +1,9 @@
 購物網站
 
+vue路徑 ./ 
+express路徑 ./server
+
+
 系統:ubuntu(GCP),docker
 
 domain:cloudflare
