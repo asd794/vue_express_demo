@@ -1,6 +1,6 @@
 購物網站
 
-vue路徑 ./ 
+vue路徑 ./
 express路徑 ./server
 
 
